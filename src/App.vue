@@ -1,7 +1,9 @@
 <template>
   <div id="app">
     <Header />
-    <ProductList />
+     <router-view></router-view>
+    
+   
   </div>
 </template>
 
@@ -17,7 +19,9 @@ html, body {
   width: 100%;
   height: 100%;
   overflow-x: hidden; 
-  background-color: darkcyan;
+  background-color: #9cdfe8;
+  color: #333333;
+  
 }
 
 #app {
