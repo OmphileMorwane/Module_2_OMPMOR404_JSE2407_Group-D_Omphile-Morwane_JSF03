@@ -95,10 +95,6 @@
       
             return result;
           });
-
-          const handleViewProduct = (productid) => {
-                router.push({ name: 'product', params: { id: productid } });
-          }
       
           onMounted(() => {
             loadProducts();
@@ -152,4 +148,6 @@
         margin-top: 50px;
       }
       </style>
+      
+      
       
