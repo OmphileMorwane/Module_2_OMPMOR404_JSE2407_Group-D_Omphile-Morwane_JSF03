@@ -66,10 +66,6 @@ export default {
         .fill(false)
         .map((_, index) => index < roundedRate);
     },
-    addToCart() {
-      // Logic to add product to cart goes here
-      console.log("Add to cart:", this.product.title);
-    },
   },
 };
 </script>
