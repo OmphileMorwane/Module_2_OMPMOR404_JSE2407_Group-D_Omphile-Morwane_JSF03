@@ -1,20 +1,25 @@
 <template>
         <div>
-          <h1>Product List</h1>
-          <ul>
-            <li v-for="product in products" :key="product.id">
-              {{ product.title }}
-            </li>
-          </ul>
+          <div class="product-grid">
+            <ProductCard
+              v-for="product in products"
+              :key="product.id"
+              :product="product"
+            />
+          </div>
         </div>
       </template>
       
       <script>
       import { ref, onMounted } from 'vue';
-      import { fetchProducts } from './api'; // Adjust the path as necessary
+      import { fetchProducts } from './api'; 
+      import ProductCard from './ProductCard.vue';
       
       export default {
         name: 'ProductList',
+        components: {
+                ProductCard,
+        },
         setup() {
           const products = ref([]);
           const error = ref(null);
@@ -39,4 +44,13 @@
         },
       };
       </script>
+
+<style scoped>
+.product-grid {
+  display: flex;
+  flex-wrap:wrap;
+  gap: 30px;
+  justify-content:space-evenly;
+}
+</style>
       
