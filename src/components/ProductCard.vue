@@ -6,6 +6,7 @@
             <p class="product-price">${{ product.price }}</p>
             <p class="product-category">{{ product.category }}</p>
             <div class="product-rating">
+
               <!-- Render filled stars -->
               <template v-for="index in totalStars">
                 <svg
@@ -56,7 +57,20 @@
       
       <script setup>
       import { defineProps, computed } from 'vue';
-      
+
+      /**
+       * Props definition for the ProductCard component.
+       * @typedef {Object} Product
+       * @property {number} id - The unique identifier of the product.
+       * @property {string} image - The URL of the product image.
+       * @property {string} title - The title of the product.
+       * @property {number} price - The price of the product.
+       * @property {string} category - The category of the product.
+       * @property {Object} rating - The rating of the product.
+       * @property {number} rating.rate - The rating value of the product.
+       *
+       * @type {import('vue').PropsDefinition<{ product: Product }>}
+       */
       const props = defineProps({
         product: {
           type: Object,
@@ -64,12 +78,26 @@
         },
       });
       
-      // Helper function to determine star counts
+      // Total number of stars for the rating
       const totalStars = 5;
-      
+
+
+       /**
+       * Computes the number of filled stars based on the product's rating.
+       * @type {import('vue').ComputedRef<number>}
+       */
       const filledStarsCount = computed(() => Math.round(props.product.rating.rate));
+
+       /**
+       * Computes the number of empty stars based on the total stars and filled stars.
+       * @type {import('vue').ComputedRef<number>}
+       */
       const emptyStarsCount = computed(() => totalStars - filledStarsCount.value);
       
+       /**
+       * Handles the action of adding the product to the cart.
+       * Logs a message to the console for now. This should be replaced with actual cart logic.
+       */
       const addToCart = () => {
         console.log('Added to cart');
       };
