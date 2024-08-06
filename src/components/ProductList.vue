@@ -57,6 +57,9 @@ export default {
     const loading = ref(true);
     const error = ref(null);
 
+    /**
+     * Fetches the list of products.
+     */
     const loadProducts = async () => {
       try {
         products.value = await fetchProducts();
@@ -68,6 +71,9 @@ export default {
       }
     };
 
+      /**
+       * Fetches the list of categories.
+       */    
     const loadCategories = async () => {
       try {
         categories.value = await fetchCategories();
@@ -77,14 +83,26 @@ export default {
       }
     };
 
+   /**
+   * Filters products by category.
+   * @param {Event} event - The change event from the category select element.
+   */
     const filterByCategory = (event) => {
       selectedCategory.value = event.target.value;
     };
 
+   /**
+   * Sorts products by price.
+   * @param {Event} event - The change event from the sort order select element.
+   */
     const sortProducts = (event) => {
       sortOrder.value = event.target.value;
     };
 
+     /**
+     * Computes the filtered and sorted list of products.
+     * @returns {Array} The filtered and sorted list of products.
+     */
     const filteredAndSortedProducts = computed(() => {
       let result = [...products.value];
 
@@ -127,6 +145,8 @@ export default {
 .controls {
   display: flex;
   gap: 200px;
+  margin-left: 40px;
+  
 }
 
 .control {
@@ -150,5 +170,31 @@ export default {
   gap: 30px;
   justify-content: space-evenly;
   margin-top: 50px;
+}
+
+@media (max-width: 768px) {
+  .controls {
+    flex-direction: column;
+    gap: 40px;
+    margin-left: 0;
+    align-items: center;
+  }
+
+  .control {
+    flex-direction: flex;
+    gap: 10px;
+    width: 100%;
+    text-align: center;
+  }
+
+  .sort-control {
+    align-items: center;
+    justify-content: center;
+    display: flex;
+  }
+
+  .sort-control label, .sort-control select {
+    margin: 0 auto;
+  }
 }
 </style>
