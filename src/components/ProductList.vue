@@ -61,9 +61,14 @@ export default {
   components: {
     ProductCard,
   },
+
+  /**
+   * The setup function initializes the component's reactive data properties and methods.
+   * @returns {Object} The reactive data properties and methods for the component.
+   */
   setup() {
     const store = useStore();
-
+    // Reactive computed properties for categories, loading state, selected category, and sort order.
     const categories = computed(() => store.state.categories);
     const loading = computed(() => store.state.loading);
     const selectedCategory = computed({
@@ -78,6 +83,9 @@ export default {
       () => store.getters.filteredAndSortedProducts
     );
 
+    /**
+     * Filters the products by the selected category.
+     */
     const filterByCategory = () => {
       // No need to update the state here as v-model does that
     };
@@ -86,6 +94,9 @@ export default {
       // No need to update the state here as v-model does that
     };
 
+    /**
+     * Sorts the products by the selected sort order.
+     */
     onMounted(() => {
       store.dispatch("loadProducts");
       store.dispatch("loadCategories");
@@ -109,11 +120,7 @@ export default {
   display: flex;
   gap: 200px;
   margin-left: 200px;
-
-  
-
 }
-
 
 .loading {
   text-align: center;
@@ -201,7 +208,7 @@ export default {
     align-items: center;
     justify-content: center;
     display: flex;
-    height:20%
+    height: 20%;
   }
 
   .sort-control label,
