@@ -3,7 +3,7 @@
     <div class="controls">
       <div class="control">
         <label for="category">Filter by Category:</label>
-        <select id="category" @change="filterByCategory">
+        <select id="category" v-model="selectedCategory" @change="filterByCategory">
           <option value="">All</option>
           <option
             v-for="category in categories"
@@ -17,7 +17,7 @@
 
       <div class="control">
         <label for="sortOrder">Sort by Price:</label>
-        <select id="sortOrder" @change="sortProducts">
+        <select id="sortOrder" v-model="sortOrder" @change="sortProducts">
           <option value="">Default</option>
           <option value="asc">Ascending</option>
           <option value="desc">Descending</option>
@@ -26,7 +26,6 @@
     </div>
 
     <div v-if="loading" class="loading">Loading...</div>
-
     <div v-else class="product-section">
       <div class="product-grid">
         <ProductCard
@@ -40,102 +39,51 @@
 </template>
 
 <script>
-import { ref, onMounted, computed } from "vue";
-import { fetchProducts, fetchCategories } from "./api";
-import ProductCard from "./ProductCard.vue";
+import { computed, onMounted } from 'vue';
+import { useStore } from 'vuex';
+import ProductCard from './ProductCard.vue';
 
 export default {
-  name: "ProductList",
+  name: 'ProductList',
   components: {
     ProductCard,
   },
   setup() {
-    const products = ref([]);
-    const categories = ref([]);
-    const selectedCategory = ref("");
-    const sortOrder = ref("");
-    const loading = ref(true);
-    const error = ref(null);
+    const store = useStore();
 
-    /**
-     * Fetches the list of products.
-     */
-    const loadProducts = async () => {
-      try {
-        products.value = await fetchProducts();
-      } catch (err) {
-        error.value = err.message;
-        console.error("Error fetching products:", err);
-      } finally {
-        loading.value = false;
-      }
-    };
-
-      /**
-       * Fetches the list of categories.
-       */    
-    const loadCategories = async () => {
-      try {
-        categories.value = await fetchCategories();
-      } catch (err) {
-        error.value = err.message;
-        console.error("Error fetching categories:", err);
-      }
-    };
-
-   /**
-   * Filters products by category.
-   * @param {Event} event - The change event from the category select element.
-   */
-    const filterByCategory = (event) => {
-      selectedCategory.value = event.target.value;
-    };
-
-   /**
-   * Sorts products by price.
-   * @param {Event} event - The change event from the sort order select element.
-   */
-    const sortProducts = (event) => {
-      sortOrder.value = event.target.value;
-    };
-
-     /**
-     * Computes the filtered and sorted list of products.
-     * @returns {Array} The filtered and sorted list of products.
-     */
-    const filteredAndSortedProducts = computed(() => {
-      let result = [...products.value];
-
-      if (selectedCategory.value) {
-        result = result.filter(
-          (product) => product.category === selectedCategory.value
-        );
-      }
-
-      if (sortOrder.value === "asc") {
-        result.sort((a, b) => a.price - b.price);
-      } else if (sortOrder.value === "desc") {
-        result.sort((a, b) => b.price - a.price);
-      }
-
-      return result;
+    const categories = computed(() => store.state.categories);
+    const loading = computed(() => store.state.loading);
+    const selectedCategory = computed({
+      get: () => store.state.selectedCategory,
+      set: (value) => store.commit('setSelectedCategory', value),
     });
+    const sortOrder = computed({
+      get: () => store.state.sortOrder,
+      set: (value) => store.commit('setSortOrder', value),
+    });
+    const filteredAndSortedProducts = computed(() => store.getters.filteredAndSortedProducts);
+
+    const filterByCategory = () => {
+      // No need to update the state here as v-model does that
+    };
+
+    const sortProducts = () => {
+      // No need to update the state here as v-model does that
+    };
 
     onMounted(() => {
-      loadProducts();
-      loadCategories();
+      store.dispatch('loadProducts');
+      store.dispatch('loadCategories');
     });
 
     return {
-      products,
       categories,
+      loading,
       selectedCategory,
       sortOrder,
-      loading,
-      error,
+      filteredAndSortedProducts,
       filterByCategory,
       sortProducts,
-      filteredAndSortedProducts,
     };
   },
 };
@@ -145,15 +93,14 @@ export default {
 .controls {
   display: flex;
   gap: 200px;
-  margin-left: 40px;
-  
+  margin-left: 200px;
+  width:10%;
 }
 
 .control {
   display: flex;
-  flex-direction: flex;
-  gap: 2px;
-  margin-left: 20px;
+  flex-direction: column;
+  gap: 30px;
 }
 
 .loading {
@@ -175,17 +122,19 @@ export default {
 
 @media (max-width: 768px) {
   .controls {
-    flex-direction: column;
-    gap: 40px;
-    margin-left: 0;
+    flex-direction: flex;
+    gap: 80px;
+    margin-left: 90px;
     align-items: center;
+    font-size: small;
   }
 
   .control {
     flex-direction: flex;
-    gap: 10px;
-    width: 100%;
+    gap: 8px;
+    width: 140%;
     text-align: center;
+    font-size: small;
   }
 
   .sort-control {
