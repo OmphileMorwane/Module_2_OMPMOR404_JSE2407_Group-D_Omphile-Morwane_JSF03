@@ -28,7 +28,7 @@
         </div>
       </div>
       <div class="back-link">
-        <router-link to="/">Back to products</router-link>
+        <router-link class="back-link-anchor" to="/">Back to products</router-link>
       </div>
     </div>
   </main>
@@ -172,7 +172,7 @@ main {
   height: auto;
   border-radius: 1px;
   max-height: 200px; /* Maximum height for the image */
-  object-fit: contain; /* Ensure the image covers the area */
+  object-fit: contain;
 }
 
 .price {
@@ -195,7 +195,7 @@ main {
 }
 
 .rating-icon {
-  font-size: 1.5rem; /* Adjust size of the star emoji */
+  font-size: 1.5rem; 
   color: #ffd902; /* Star color */
   margin-right: 0.5rem;
 }
@@ -227,21 +227,27 @@ main {
 .back-link {
   display: block;
   padding: 10px 20px;
-  color: #87a2b0;
+  color: #eef1f3;
   font-weight: bold;
-  border: 2px solid #71797e;
+  border: 3px solid #070707;
   border-radius: 30px;
-  background: rgb(112, 204, 196);
+  background: rgb(16, 128, 114);
   transition: 0.3s, color 0.3s;
   position: absolute;
   bottom: 88%; /* Position the link at the bottom of the box */
   left: 90%;
   transform: translateX(-50%);
+  text-decoration: none;
+}
+
+.back-link-anchor {
+  text-decoration: none; /* Remove underline */
+  color: inherit; /* Ensure text color matches parent */
 }
 
 .back-link:hover {
-  background: rgb(186, 223, 244); /* Light grey background on hover */
-  color: #090214; /* Change text color on hover */
+  background: rgb(202, 240, 238); /* Light grey background on hover */
+  color:rgb(9, 99, 96);
 }
 
 .product-category {
