@@ -49,15 +49,6 @@
       <div class="skeleton-price"></div>
     </div>
   </div>
-  <div v-else class="product-section">
-    <div class="product-grid">
-      <ProductCard
-        v-for="product in filteredAndSortedProducts"
-        :key="product.id"
-        :product="product"
-      />
-    </div>
-  </div>
 </template>
 
 <script>
