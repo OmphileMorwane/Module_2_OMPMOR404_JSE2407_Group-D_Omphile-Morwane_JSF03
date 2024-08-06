@@ -81,6 +81,10 @@ import { ref } from 'vue';
 
 const navbarOpen = ref(false);
 
+/**
+ * Toggles the visibility of the navbar.
+ * @returns {void}
+ */
 function toggleNavbar() {
   navbarOpen.value = !navbarOpen.value;
   console.log("Navbar Open:", navbarOpen.value);
@@ -94,7 +98,7 @@ function toggleNavbar() {
   top: 0;
   z-index: 50;
   width: 100%;
-  height: 140px; /* Reduced height */
+  height: 140px; 
 }
 
 .nav {
@@ -108,9 +112,9 @@ color: hsl(216, 12%, 84%);
   display: flex;
   flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-start; /* Adjust to flex-start */
+  justify-content: flex-start; 
   margin: 0;
-  padding: 8px; /* Reduced padding */
+  padding: 8px; 
   width: 100%;
   margin-bottom: 40px;
 }
@@ -131,12 +135,12 @@ color: hsl(216, 12%, 84%);
 }
 
 .logo-img {
-  height: 40px; /* h-8 */
+  height: 40px; 
   margin-bottom: 20px;
 }
 
 .logo-text {
-  font-size: 24px; /* text-2xl */
+  font-size: 24px; 
   font-weight: 600; /* font-semibold */
   color: white;
   margin: 2px;
@@ -170,8 +174,8 @@ color: hsl(216, 12%, 84%);
 }
 
 .menu-icon {
-  width: 20px; /* w-5 */
-  height: 20px; /* h-5 */
+  width: 20px; 
+  height: 20px; 
 }
 
 .navbar-dropdown {
@@ -186,7 +190,7 @@ color: hsl(216, 12%, 84%);
   font-weight: 500; /* font-medium */
   padding: 16px;
   margin-top: 30px;
-  background-color: transparent; /* Gray 500 */
+  background-color: transparent; 
   list-style-type: none;
 
 }
@@ -230,8 +234,8 @@ color: hsl(216, 12%, 84%);
 }
 
 .cart-icon {
-  height: 24px; /* h-6 */
-  width: 24px; /* w-6 */
+  height: 24px; 
+  width: 24px; 
   color: white;
   cursor: pointer;
 }
@@ -253,7 +257,7 @@ color: hsl(216, 12%, 84%);
 
   .navbar-list {
     flex-direction: row;
-    gap: 32px; /* space-x-8 */
+    gap: 32px; 
     margin-left: auto; /* Ensures the items are pushed to the left */
     margin-top: 0;
     border: none;
