@@ -118,14 +118,11 @@ export default {
   display: flex;
   gap: 200px;
   margin-left: 200px;
-  width: 10%;
+
+  
+
 }
 
-.control {
-  display: flex;
-  flex-direction: column;
-  gap: 30px;
-}
 
 .loading {
   text-align: center;
@@ -194,7 +191,7 @@ export default {
 @media (max-width: 768px) {
   .controls {
     flex-direction: column;
-    gap: 80px;
+    gap: 20px;
     margin-left: 90px;
     align-items: center;
     font-size: small;
@@ -206,12 +203,14 @@ export default {
     width: 140%;
     text-align: center;
     font-size: small;
+    margin-left: -100px;
   }
 
   .sort-control {
     align-items: center;
     justify-content: center;
     display: flex;
+    height:20%
   }
 
   .sort-control label,
