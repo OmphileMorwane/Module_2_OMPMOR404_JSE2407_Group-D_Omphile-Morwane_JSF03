@@ -170,7 +170,7 @@
       }
       
       .add-to-cart {
-        background-color: #007bff;
+        background-color: #198680;
         color: white;
         border: none;
         padding: 6px 10px;
@@ -183,7 +183,7 @@
       }
       
       .add-to-cart:hover {
-        background-color: #0056b3;
+        background-color: #7dc6bd;
       }
       
       .heart-icon {
@@ -196,7 +196,7 @@
       }
       
       .heart-icon:hover {
-        fill: red;
+        fill: rgb(255, 167, 181);
       }
       
       .actions {
