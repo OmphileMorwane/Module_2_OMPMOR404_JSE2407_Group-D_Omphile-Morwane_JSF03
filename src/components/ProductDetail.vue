@@ -1,6 +1,17 @@
 <template>
   <main>
-    <div v-if="product" class="product-detail">
+    <!-- Skeleton loader -->
+    <div v-if="loading" class="skeleton-container">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-title"></div>
+      <div class="skeleton-description"></div>
+      <div class="skeleton-price"></div>
+      <div class="skeleton-category"></div>
+      <div class="skeleton-rating"></div>
+    </div>
+    <!--Actual content-->
+
+    <div v-else-if="product" class="product-detail">
       <img :src="product.image" :alt="product.title" class="image" />
       <h1>{{ product.title }}</h1>
       <p>{{ product.description }}</p>
@@ -20,7 +31,6 @@
         <router-link to="/">Back to products</router-link>
       </div>
     </div>
-    <p v-else>Loading...</p>
   </main>
 </template>
 
@@ -36,6 +46,12 @@ import { fetchProduct } from "./api";
 const product = ref(null);
 
 /**
+ * Reactive reference to manage loading state.
+ * @type {boolean}
+ */
+const loading = ref(true);
+
+/**
  * Vue Router's useRoute function to get the current route object.
  * @type {Object}
  */
@@ -48,7 +64,13 @@ const route = useRoute();
  */
 const loadProduct = async () => {
   const id = route.params.id;
-  product.value = await fetchProduct(id);
+  try {
+    product.value = await fetchProduct(id);
+  } catch (error) {
+    console.error("Error fetching product:", error);
+  } finally {
+    loading.value = false;
+  }
 };
 
 /**
@@ -68,6 +90,71 @@ main {
   padding: 20px;
 }
 
+.skeleton-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  max-width: 600px;
+}
+
+.skeleton-image,
+.skeleton-title,
+.skeleton-description,
+.skeleton-price,
+.skeleton-category,
+.skeleton-rating {
+  background-color: #aca8a8;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+.skeleton-image {
+  width: 100%;
+  height: 200px;
+}
+
+.skeleton-title {
+  width: 80%;
+  height: 24px;
+}
+
+.skeleton-description {
+  width: 90%;
+  height: 16px;
+}
+
+.skeleton-price {
+  width: 50%;
+  height: 20px;
+}
+
+.skeleton-category {
+  width: 60%;
+  height: 16px;
+}
+
+.skeleton-rating {
+  width: 70%;
+  height: 16px;
+}
+
+@keyframes pulse {
+  0% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.skeleton-container > * {
+  animation: pulse 1.5s infinite ease-in-out;
+}
+
 .product-detail {
   max-width: 600px;
   margin: 0 auto;
@@ -80,11 +167,11 @@ main {
 }
 
 .product-detail img {
-  width:60%; 
-  height: auto; 
+  width: 60%;
+  height: auto;
   border-radius: 1px;
   max-height: 200px; /* Maximum height for the image */
-  object-fit:contain; /* Ensure the image covers the area */
+  object-fit: contain; /* Ensure the image covers the area */
 }
 
 .price {
@@ -141,16 +228,14 @@ main {
   padding: 10px 20px;
   color: #87a2b0;
   font-weight: bold;
-  border: 2px solid #71797e; 
+  border: 2px solid #71797e;
   border-radius: 30px;
-  background: rgb(112, 204, 196); 
+  background: rgb(112, 204, 196);
   transition: 0.3s, color 0.3s;
   position: absolute;
   bottom: 88%; /* Position the link at the bottom of the box */
   left: 90%;
   transform: translateX(-50%);
-
-  
 }
 
 .back-link:hover {
@@ -165,5 +250,4 @@ main {
   border-radius: 4px;
   font-size: 0.875rem;
 }
-
 </style>
