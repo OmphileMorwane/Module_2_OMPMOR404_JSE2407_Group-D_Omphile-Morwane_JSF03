@@ -1,7 +1,7 @@
 <template>
   <main>
     <div v-if="product" class="product-detail">
-      <img :src="product.image" :alt="product.title" />
+      <img :src="product.image" :alt="product.title" class="image" />
       <h1>{{ product.title }}</h1>
       <p>{{ product.description }}</p>
       <p class="price">${{ product.price }}</p>
@@ -29,14 +29,32 @@ import { ref, onMounted } from "vue";
 import { useRoute } from "vue-router";
 import { fetchProduct } from "./api";
 
-const route = useRoute();
+/**
+ * Reactive reference to store the product details.
+ * @type {Object|null}
+ */
 const product = ref(null);
 
+/**
+ * Vue Router's useRoute function to get the current route object.
+ * @type {Object}
+ */
+const route = useRoute();
+
+/**
+ * Asynchronous function to load product details from the API.
+ * It fetches the product data based on the product ID from the route parameters.
+ * @returns {Promise<void>}
+ */
 const loadProduct = async () => {
   const id = route.params.id;
   product.value = await fetchProduct(id);
 };
 
+/**
+ * Lifecycle hook that runs when the component is mounted.
+ * It calls the loadProduct function to fetch and display the product details.
+ */
 onMounted(() => {
   loadProduct();
 });
@@ -62,9 +80,11 @@ main {
 }
 
 .product-detail img {
-  max-width: 100%;
-  height: auto;
-  border-radius: 8px;
+  width:60%; 
+  height: auto; 
+  border-radius: 1px;
+  max-height: 200px; /* Maximum height for the image */
+  object-fit:contain; /* Ensure the image covers the area */
 }
 
 .price {
@@ -118,23 +138,24 @@ main {
 
 .back-link {
   display: block;
-  text-decoration: none;
   padding: 10px 20px;
-  color: #353b3e;
+  color: #87a2b0;
   font-weight: bold;
-  border: 2px solid #71797e; /* Border color matching the link color */
-  border-radius: 4px;
-  background: white; /* Ensures the link background matches the box */
+  border: 2px solid #71797e; 
+  border-radius: 30px;
+  background: rgb(112, 204, 196); 
   transition: 0.3s, color 0.3s;
   position: absolute;
-  bottom: 2%; /* Position the link at the bottom of the box */
-  left: 50%;
+  bottom: 88%; /* Position the link at the bottom of the box */
+  left: 90%;
   transform: translateX(-50%);
+
+  
 }
 
 .back-link:hover {
   background: rgb(186, 223, 244); /* Light grey background on hover */
-  color: #000; /* Change text color on hover */
+  color: #090214; /* Change text color on hover */
 }
 
 .product-category {
@@ -144,4 +165,5 @@ main {
   border-radius: 4px;
   font-size: 0.875rem;
 }
+
 </style>
