@@ -96,6 +96,7 @@ main {
   align-items: center;
   width: 100%;
   max-width: 600px;
+  background-color: white;
 }
 
 .skeleton-image,
