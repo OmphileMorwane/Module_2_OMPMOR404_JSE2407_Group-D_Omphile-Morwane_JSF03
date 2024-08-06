@@ -3,7 +3,11 @@
     <div class="controls">
       <div class="control">
         <label for="category">Filter by Category:</label>
-        <select id="category" v-model="selectedCategory" @change="filterByCategory">
+        <select
+          id="category"
+          v-model="selectedCategory"
+          @change="filterByCategory"
+        >
           <option value="">All</option>
           <option
             v-for="category in categories"
@@ -25,7 +29,7 @@
       </div>
     </div>
 
-    <div v-if="loading" class="loading">Loading...</div>
+    <div v-if="loading" class="loading"></div>
     <div v-else class="product-section">
       <div class="product-grid">
         <ProductCard
@@ -36,15 +40,33 @@
       </div>
     </div>
   </div>
+
+  <div v-if="loading" class="skeleton-grid">
+    <div class="skeleton-card" v-for="n in 6" :key="n">
+      <div class="skeleton-image"></div>
+      <div class="skeleton-title"></div>
+      <div class="skeleton-description"></div>
+      <div class="skeleton-price"></div>
+    </div>
+  </div>
+  <div v-else class="product-section">
+    <div class="product-grid">
+      <ProductCard
+        v-for="product in filteredAndSortedProducts"
+        :key="product.id"
+        :product="product"
+      />
+    </div>
+  </div>
 </template>
 
 <script>
-import { computed, onMounted } from 'vue';
-import { useStore } from 'vuex';
-import ProductCard from './ProductCard.vue';
+import { computed, onMounted } from "vue";
+import { useStore } from "vuex";
+import ProductCard from "./ProductCard.vue";
 
 export default {
-  name: 'ProductList',
+  name: "ProductList",
   components: {
     ProductCard,
   },
@@ -55,13 +77,15 @@ export default {
     const loading = computed(() => store.state.loading);
     const selectedCategory = computed({
       get: () => store.state.selectedCategory,
-      set: (value) => store.commit('setSelectedCategory', value),
+      set: (value) => store.commit("setSelectedCategory", value),
     });
     const sortOrder = computed({
       get: () => store.state.sortOrder,
-      set: (value) => store.commit('setSortOrder', value),
+      set: (value) => store.commit("setSortOrder", value),
     });
-    const filteredAndSortedProducts = computed(() => store.getters.filteredAndSortedProducts);
+    const filteredAndSortedProducts = computed(
+      () => store.getters.filteredAndSortedProducts
+    );
 
     const filterByCategory = () => {
       // No need to update the state here as v-model does that
@@ -72,8 +96,8 @@ export default {
     };
 
     onMounted(() => {
-      store.dispatch('loadProducts');
-      store.dispatch('loadCategories');
+      store.dispatch("loadProducts");
+      store.dispatch("loadCategories");
     });
 
     return {
@@ -94,7 +118,7 @@ export default {
   display: flex;
   gap: 200px;
   margin-left: 200px;
-  width:10%;
+  width: 10%;
 }
 
 .control {
@@ -106,6 +130,53 @@ export default {
 .loading {
   text-align: center;
   margin-top: 20px;
+}
+
+.skeleton-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 30px;
+  justify-content: space-evenly;
+  margin-top: 50px;
+}
+
+.skeleton-card {
+  background: #e0e0e0;
+  border-radius: 8px;
+  width: 200px;
+  height: 300px;
+  padding: 10px;
+}
+
+.skeleton-image {
+  background: #c0c0c0;
+  width: 100%;
+  height: 150px;
+  border-radius: 4px;
+}
+
+.skeleton-title {
+  background: #d0d0d0;
+  width: 80%;
+  height: 20px;
+  margin: 10px 0;
+  border-radius: 4px;
+}
+
+.skeleton-description {
+  background: #d0d0d0;
+  width: 60%;
+  height: 16px;
+  margin: 5px 0;
+  border-radius: 4px;
+}
+
+.skeleton-price {
+  background: #d0d0d0;
+  width: 50%;
+  height: 20px;
+  margin-top: 10px;
+  border-radius: 4px;
 }
 
 .product-section {
@@ -122,7 +193,7 @@ export default {
 
 @media (max-width: 768px) {
   .controls {
-    flex-direction: flex;
+    flex-direction: column;
     gap: 80px;
     margin-left: 90px;
     align-items: center;
@@ -130,7 +201,7 @@ export default {
   }
 
   .control {
-    flex-direction: flex;
+    flex-direction: column;
     gap: 8px;
     width: 140%;
     text-align: center;
@@ -143,7 +214,8 @@ export default {
     display: flex;
   }
 
-  .sort-control label, .sort-control select {
+  .sort-control label,
+  .sort-control select {
     margin: 0 auto;
   }
 }
