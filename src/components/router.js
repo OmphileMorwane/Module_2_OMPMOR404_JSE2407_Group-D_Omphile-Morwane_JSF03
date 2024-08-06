@@ -2,6 +2,10 @@ import { createRouter, createWebHistory } from 'vue-router';
 import ProductList from '../components/ProductList.vue';
 import ProductDetail from '../components/ProductDetail.vue';
 
+/**
+ * Array of route definitions.
+ * @type {Array<Object>}
+ */
 const routes = [
   {
     path: '/',
@@ -16,6 +20,11 @@ const routes = [
   },
 ];
 
+
+/**
+ * Creates a new Vue Router instance.
+ * @returns {Router} The Vue Router instance.
+ */
 const router = createRouter({
   history: createWebHistory(),
   routes,
