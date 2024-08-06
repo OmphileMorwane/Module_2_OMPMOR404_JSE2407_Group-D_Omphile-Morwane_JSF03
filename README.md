@@ -8,7 +8,8 @@ Vue 3 SwiftCart is an e-commerce web application built with Vue 3. It allows use
 - **Category Filter**: Allows users to filter products by category.
 - **Sorting**: Enables sorting products by price in ascending or descending order.
 - **Responsive Design**: Adapts to different screen sizes with a mobile-friendly layout.
-- **Skeleton Loading**: Shows placeholder content while products are being loaded. -**State Management**: Utilizes Vuex to manage the application's state, ensuring a centralized and reactive data flow for filtering, sorting, and product information.
+- **Skeleton Loading**: Shows placeholder content while products are being loaded.
+ -**State Management**: Utilizes Vuex to manage the application's state, ensuring a centralized and reactive data flow for filtering, sorting, and product information.
 
 ## Technologies Used
 
