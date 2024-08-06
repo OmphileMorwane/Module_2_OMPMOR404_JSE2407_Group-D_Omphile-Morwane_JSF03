@@ -152,7 +152,8 @@ export default {
 .control {
   display: flex;
   flex-direction: flex;
-  gap: 40px;
+  gap: 2px;
+  margin-left: 20px;
 }
 
 .loading {
